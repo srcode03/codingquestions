@@ -13,30 +13,25 @@ class Solution{
     int findLongestConseqSubseq(int arr[], int N)
     {
       //Your code here
-      vector<int>v;
+      map<int,int>mp;
       for(int i=0;i<N;i++)
       {
-          v.push_back(arr[i]);
+          mp[arr[i]]++;
       }
-      sort(v.begin(),v.end());
       int prev=INT_MIN;
+      int c=1;
       int ans=0;
-      int c=0;
-      for(int i=0;i<N;i++)
+      for(auto it:mp)
       {
-          if(prev==v[i])
-          {
-              continue;
-          }
-          else if(prev==(v[i]-1))
+          if(prev==it.first-1)
           {
               c++;
-              prev=v[i];
+              prev=it.first;
           }
           else{
               ans=max(ans,c);
               c=1;
-              prev=v[i];
+              prev=it.first;
           }
       }
       ans=max(ans,c);
