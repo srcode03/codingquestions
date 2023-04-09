@@ -4,46 +4,53 @@ using namespace std;
 
 
 // } Driver Code Ends
-// User Function Template for C++ solution
-
-class Solution {
-  public:
-    vector<long long> nextLargerElement(vector<long long> &arr, int n){
+class Solution
+{
+    public:
+    
+   
+    //Function to find the next greater element for each element of the array.
+    vector<long long> nextLargerElement(vector<long long> arr, int n){
         // Your code here
-        stack<long long>st;
-        vector<long long>ans;
-        for(int i=n-1;i>=0;i--)
-        {
-            if(st.empty())
-            {
-                ans.push_back(-1);
-                st.push(arr[i]);
-            }
-            else{
-                int fg=0;
-                while(!st.empty())
-                {
-                    if(st.top()>arr[i])
-                    {
-                        ans.push_back(st.top());
-                        st.push(arr[i]);
-                        fg=1;
-                        break;
-                    }
-                    else{
-                        st.pop();
-                    }
-                }
-                if(fg==0)
-                {
-                    ans.push_back(-1);
-                    st.push(arr[i]);
-                }
-            }
-        }
-        reverse(ans.begin(),ans.end());
-        return ans;
+       vector<long long>ans(n);
+       ans[n-1]=-1;
+       stack<long long>st;
+       st.push(arr[n-1]);
+       for(int i=n-2;i>=0;i--)
+       {
+           if(arr[i]<st.top())
+           {
+               ans[i]=st.top();
+               st.push(arr[i]);
+           }
+           else{
+               int fg=0;
+               while(!st.empty())
+               {
+                   if(st.top()>arr[i])
+                   {
+                       ans[i]=st.top();
+                       fg=1;
+                       break;
+                   }
+                   else{
+                       st.pop();
+                   }
+               }
+               if(fg==0)
+               {
+                   ans[i]=-1;
+               }
+               st.push(arr[i]);
+               
+           }
+       }
+       
+       return ans;
+        
+       
     }
+        
 };
 
 //{ Driver Code Starts.
@@ -61,13 +68,11 @@ int main()
         for(int i=0;i<n;i++)
             cin>>arr[i];
         
-        Solution ob;
-        
-        vector <long long> res = ob.nextLargerElement(arr, n);
+        Solution obj;
+        vector <long long> res = obj.nextLargerElement(arr, n);
         for (long long i : res) cout << i << " ";
         cout<<endl;
     }
 	return 0;
 }
-
 // } Driver Code Ends
