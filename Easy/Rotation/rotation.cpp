@@ -10,29 +10,11 @@ class Solution{
 public:	
 	int findKRotation(int arr[], int n) {
 	    // code here
-	    int l=0;
-	    int h=n-2;
-	    if(arr[n-1]<arr[n-2])
+	    for(int i=0;i<n-1;i++)
 	    {
-	        return n-1;
-	    }
-	    while(l<=h)
-	    {
-	        int mid=(l+h)/2;
-	        if(arr[mid]>arr[mid+1])
+	        if(arr[i]>arr[i+1])
 	        {
-	            return mid+1;
-	        }
-	        if(arr[mid]<arr[mid-1])
-	        {
-	            return mid;
-	        }
-	        if(arr[mid]>arr[l])
-	        {
-	            l=mid+1;
-	        }
-	        else{
-	            h=mid-1;
+	            return i+1;
 	        }
 	    }
 	    return 0;
