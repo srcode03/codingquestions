@@ -14,10 +14,12 @@ class Solution{
     { 
     
        // Your code here
-       bool flag=binary_search(arr,arr+N,K);
-       if(flag==true)
+       for(int i=0;i<N;i++)
        {
-           return 1;
+           if(arr[i]==K)
+           {
+               return 1;
+           }
        }
        return -1;
        
