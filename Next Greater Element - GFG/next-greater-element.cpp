@@ -4,53 +4,46 @@ using namespace std;
 
 
 // } Driver Code Ends
+
+#define ll long long
 class Solution
 {
     public:
-    
-   
     //Function to find the next greater element for each element of the array.
     vector<long long> nextLargerElement(vector<long long> arr, int n){
         // Your code here
-       vector<long long>ans(n);
-       ans[n-1]=-1;
-       stack<long long>st;
-       st.push(arr[n-1]);
-       for(int i=n-2;i>=0;i--)
-       {
-           if(arr[i]<st.top())
-           {
-               ans[i]=st.top();
-               st.push(arr[i]);
-           }
-           else{
-               int fg=0;
-               while(!st.empty())
-               {
-                   if(st.top()>arr[i])
-                   {
-                       ans[i]=st.top();
-                       fg=1;
-                       break;
-                   }
-                   else{
-                       st.pop();
-                   }
-               }
-               if(fg==0)
-               {
-                   ans[i]=-1;
-               }
-               st.push(arr[i]);
-               
-           }
-       }
-       
-       return ans;
+        stack<ll>st;
+        vector<ll>ans;
+        ans.push_back(-1);
+        st.push(arr[n-1]);
+        for(int i=n-2;i>=0;i--)
+        {
+            int fg=0;
+            while(!st.empty())
+            {
+                if(st.top()>arr[i])
+                {
+                    fg=1;
+                    break;
+                }
+                else{
+                    st.pop();
+                }
+            }
+            if(fg==1)
+            {
+                ans.push_back(st.top());
+                st.push(arr[i]);
+            }
+            else{
+                ans.push_back(-1);
+                st.push(arr[i]);
+            }
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
         
-       
     }
-        
 };
 
 //{ Driver Code Starts.
