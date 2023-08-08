@@ -10,31 +10,27 @@ using namespace std;
 
 class Solution{
 public:
-    void insert(stack<int>&st,int x)
+    void insert(int t,stack<int>&st)
     {
-        if(st.empty())
+        if(st.size()==0)
         {
-            st.push(x);
+            st.push(t);
             return;
         }
-        int b=st.top();
+        int tp=st.top();
         st.pop();
-        insert(st,x);
-        st.push(b);
-    }
-    void reverse(stack<int>&st)
-    {
-        if(st.empty())
-        {
-            return;
-        }
-        int a=st.top();
-        st.pop();
-        reverse(st);
-        insert(st,a);
+        insert(t,st);
+        st.push(tp);
     }
     void Reverse(stack<int> &st){
-        reverse(st);
+        if(st.size()==0)
+        {
+            return;
+        }
+        int t=st.top();
+        st.pop();
+        Reverse(st);
+        insert(t,st);
     }
 };
 
