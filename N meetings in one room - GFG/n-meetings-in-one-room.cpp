@@ -8,7 +8,7 @@ class Solution
     public:
     //Function to find the maximum number of meetings that can
     //be performed in a meeting room.
-    static bool compare(pair<int,int>&a,pair<int,int>&b)
+    static bool comp(pair<int,int>a,pair<int,int>b)
     {
         if(a.second==b.second)
         {
@@ -24,10 +24,10 @@ class Solution
         {
             v.push_back({start[i],end[i]});
         }
-        sort(v.begin(),v.end(),compare);
-        int e=INT_MIN;
-        int ans=0;
-        for(int i=0;i<n;i++)
+        sort(v.begin(),v.end(),comp);
+        int e=v[0].second;
+        int ans=1;
+        for(int i=1;i<n;i++)
         {
             if(v[i].first>e)
             {
@@ -36,7 +36,6 @@ class Solution
             }
         }
         return ans;
-        
     }
 };
 
