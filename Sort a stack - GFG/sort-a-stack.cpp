@@ -50,27 +50,27 @@ public:
 
 /* The below method sorts the stack s 
 you are required to complete the below method */
-void insert(int t,stack<int>&st)
+void insertatbottom(int x,stack<int>&s)
 {
-    if(st.empty() || st.top()<t)
+    if(s.empty() || x>=s.top())
     {
-        st.push(t);
+        s.push(x);
         return;
     }
-    int temp=st.top();
-    st.pop();
-    insert(t,st);
-    st.push(temp);
+    int d=s.top();
+    s.pop();
+    insertatbottom(x,s);
+    s.push(d);
 }
 void SortedStack :: sort()
 {
    //Your code here
-   if(s.size()==0)
+   if(s.empty())
    {
        return;
    }
-   int t=s.top();
+   int x=s.top();
    s.pop();
    sort();
-   insert(t,s);
+   insertatbottom(x,s);
 }
