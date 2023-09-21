@@ -9,29 +9,29 @@ using namespace std;
 
 class Solution{   
 public:
-    int solve(int i,vector<int>arr,int sum,vector<vector<int>>&dp)
+    bool solve(int i,int sum,vector<int>arr,vector<vector<int>>&dp)
     {
         if(sum==0)
         {
-            return 1;
+            return true;
         }
         if(i==0)
         {
-            if(sum-arr[0]==0)
+            if(sum==arr[0])
             {
-                return 1;
+                return true;
             }
-            return 0;
+            return false;
         }
         if(dp[i][sum]!=-1)
         {
             return dp[i][sum];
         }
-        int notake=solve(i-1,arr,sum,dp);
-        int take=0;
-        if(arr[i]<=sum)
+        bool take=false;
+        bool notake=solve(i-1,sum,arr,dp);
+        if(sum>=arr[i])
         {
-         take=solve(i-1,arr,sum-arr[i],dp);
+            take=solve(i-1,sum-arr[i],arr,dp);
         }
         return dp[i][sum]=take||notake;
     }
@@ -39,8 +39,7 @@ public:
         // code here 
         int n=arr.size();
         vector<vector<int>>dp(n,vector<int>(sum+1,-1));
-        int ans=solve(n-1,arr,sum,dp);
-        return ans;
+        return solve(n-1,sum,arr,dp);
     }
 };
 
