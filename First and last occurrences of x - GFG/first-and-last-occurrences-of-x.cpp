@@ -3,51 +3,53 @@
 using namespace std;
 
 // } Driver Code Ends
-vector<int> find(int arr[], int n , int x )
+class Solution
 {
-    // code here
-    int min=-1,max=-1;
-    map<int,int>mp;
-    int l=0,h=n-1,mid;
-    while(l<=h)
+    public:
+    vector<int> find(int arr[], int n , int x )
     {
-        mid=(l+h)/2;
-        if(arr[mid]<x)
+        // code here
+        int ft=-1,lt=-1;
+        int l=0;
+        int h=n-1;
+        while(l<=h)
         {
-            l=mid+1;
+            int mid=(l+h)/2;
+            if(arr[mid]<=x)
+            {
+                lt=mid;
+                l=mid+1;
+            }
+            else{
+                h=mid-1;
+            }
         }
-        else if(arr[mid]>x)
+        l=0;
+        h=n-1;
+        while(l<=h)
         {
-            h=mid-1;
+            int mid=(l+h)/2;
+            if(arr[mid]>=x)
+            {
+                ft=mid;
+                h=mid-1;
+            }
+            else{
+                l=mid+1;
+            }
+        }
+        vector<int>ans={-1,-1};
+        if(arr[ft]!=x || arr[lt]!=x)
+        {
+            return ans;
         }
         else{
-            min=mid;
-            h=mid-1;
+            ans[0]=ft;
+            ans[1]=lt;
+            return ans;
         }
     }
-    l=0;
-    h=n-1;
-    while(l<=h)
-    {
-        mid=(l+h)/2;
-        if(arr[mid]<x)
-        {
-            l=mid+1;
-        }
-        else if(arr[mid]>x)
-        {
-            h=mid-1;
-        }
-        else{
-            max=mid;
-            l=mid+1;
-        }
-    }
-    vector<int>ans;
-    ans.push_back(min);
-    ans.push_back(max);
-    return ans;
-}
+};
 
 //{ Driver Code Starts.
 
@@ -63,7 +65,8 @@ int main()
         for(i=0;i<n;i++)
         cin>>arr[i];
         vector<int> ans;
-        ans=find(arr,n,x);
+        Solution ob;
+        ans=ob.find(arr,n,x);
         cout<<ans[0]<<" "<<ans[1]<<endl;
     }
     return 0;
