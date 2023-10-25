@@ -9,25 +9,18 @@ using namespace std;
 
 class Solution{
 public:
-    int solve(int i,int w,int val[],int wt[],vector<vector<int>>&dp)
+    int solve(int i,int n,int w,int val[],int wt[],vector<vector<int>>&dp)
     {
-        if(w==0)
+        if(i==n)
         {
             return 0;
         }
-        if(i==0)
+        if(dp[i][w]!=-1)return dp[i][w];
+        int notake=solve(i+1,n,w,val,wt,dp);
+        int take=0;
+        if(w>=wt[i])
         {
-            return val[0]*(w/wt[0]);
-        }
-        if(dp[i][w]!=-1)
-        {
-            return dp[i][w];
-        }
-        int notake=solve(i-1,w,val,wt,dp);
-        int take=-1e9;
-        if(wt[i]<=w)
-        {
-            take=val[i]+solve(i,w-wt[i],val,wt,dp);
+            take=max(val[i]+solve(i,n,w-wt[i],val,wt,dp),val[i]+solve(i+1,n,w-wt[i],val,wt,dp));
         }
         return dp[i][w]=max(take,notake);
     }
@@ -35,12 +28,7 @@ public:
     {
         // code here
         vector<vector<int>>dp(N,vector<int>(W+1,-1));
-        int ans=solve(N-1,W,val,wt,dp);
-        if(ans==-1e9)
-        {
-            return 0;
-        }
-        return ans;
+        return solve(0,N,W,val,wt,dp);
     }
 };
 
