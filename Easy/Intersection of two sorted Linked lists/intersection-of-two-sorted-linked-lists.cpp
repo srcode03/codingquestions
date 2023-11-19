@@ -35,37 +35,36 @@ Node* inputList(int size)
 
 void printList(Node* n)
 {
+    if(n)
     while(n)
     {
         cout<< n->data << " ";
         n = n->next;
     }
+    else cout<< " ";
 }
 
-Node* findIntersection(Node* head1, Node* head2);
-
-int main()
-{
-	int t;
-	cin>>t;
-	while(t--)
-	{
-	    int n,m;
-	    cin>> n >> m;
-	    
-	    Node* head1 = inputList(n);
-	    Node* head2 = inputList(m);
-	    
-	    Node* result = findIntersection(head1, head2);
-	    
-	    printList(result);
-	    cout<< endl;
-	}
-	return 0;
-}
 
 // } Driver Code Ends
+/* The structure of the Linked list Node is as follows:
 
+struct Node
+{
+    int data;
+    Node *next;
+    Node(int val)
+    {
+        data=val;
+        next=NULL;
+    }
+};
+
+*/
+
+class Solution
+{
+    public:
+    
 
 /* The structure of the Linked list Node is as follows:
 
@@ -108,3 +107,30 @@ Node* findIntersection(Node* head1, Node* head2)
     return t->next;
     
 }
+};
+
+
+
+//{ Driver Code Starts.
+int main()
+{
+	int t;
+	cin>>t;
+	while(t--)
+	{
+	    int n,m;
+	    cin>> n >> m;
+	    
+	    Node* head1 = inputList(n);
+	    Node* head2 = inputList(m);
+	    
+	    Solution ob;
+	    Node* result = ob.findIntersection(head1, head2);
+	    
+	    printList(result);
+	    cout<< endl;
+	}
+	return 0;
+}
+
+// } Driver Code Ends
