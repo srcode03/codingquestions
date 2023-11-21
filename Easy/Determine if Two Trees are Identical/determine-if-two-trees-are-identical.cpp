@@ -42,44 +42,15 @@ class Solution
     bool isIdentical(Node *r1, Node *r2)
     {
         //Your Code here
-        queue<Node *>q1;
-        queue<Node *>q2;
-        q1.push(r1);
-        q2.push(r2);
-        while(!q1.empty() && !q2.empty())
-        {
-            Node *s1=q1.front();
-            q1.pop();
-            Node *s2=q2.front();
-            q2.pop();
-            if(s1->data!=s2->data)
-            {
-                return false;
-            }
-            if(s1->left!=NULL)
-            {
-                q1.push(s1->left);
-            }
-            if(s1->right!=NULL)
-            {
-                q1.push(s1->right);
-            }
-            if(s2->left!=NULL)
-            {
-                q2.push(s2->left);
-            }
-            if(s2->right!=NULL)
-            {
-                q2.push(s2->right);
-            }
-        }
-        if(q1.size()==0 && q2.size()==0)
+        if(r1==NULL && r2==NULL)
         {
             return true;
         }
-        else{
-            return false;
+        if(r1!=NULL && r2!=NULL)
+        {
+            return (r1->data==r2->data && isIdentical(r1->left,r2->left) && isIdentical(r1->right,r2->right));
         }
+        return false;
     }
 };
 
