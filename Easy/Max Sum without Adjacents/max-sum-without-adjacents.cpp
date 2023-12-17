@@ -11,19 +11,15 @@ public:
 	// calculate the maximum sum with out adjacent
 	int findMaxSum(int *arr, int n) {
 	    // code here
-	    vector<int>dp(n+1,0);
-	    dp[0]=arr[0];
-	    for(int i=1;i<=n;i++)
-        {
-            int pick=arr[i];
-            if(i>1)
-            {
-                pick+=dp[i-2];
-            }
-            int nopick=dp[i-1];
-            dp[i]=max(pick,nopick);
+	    int preMax = 0;
+        int ans = 0;
+        int current = 0;
+        for (int i = 0; i < n; i++) {
+            current = preMax + arr[i];
+            preMax = ans;
+            ans = max(current, ans);
         }
-        return dp[n-1];
+        return ans;
 	}
 };
 
