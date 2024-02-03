@@ -17,7 +17,45 @@ struct Node
     
 };
 
-long long unsigned int decimalValue(struct Node *head);
+
+// } Driver Code Ends
+/* Below global variable is declared in code for modulo arithmetic
+const long long unsigned int MOD = 1000000007; */
+
+/* Link list Node/
+struct Node
+{
+    bool data;   // NOTE data is bool
+    Node* next;
+    
+    Node(int x){
+        data = x;
+        next = NULL;
+    }
+    
+}; */
+#include<bits/stdc++.h>
+#define ll long long unsigned int
+class Solution
+{
+    public:
+        // Should return decimal equivalent modulo 1000000007 of binary linked list 
+         long long unsigned int decimalValue(Node *head) {
+        long long unsigned int ans=0, M=1e9+7;
+        Node *curr=head;
+        while(curr) {
+            ans = ans*2+curr->data;
+            ans %= M;
+            curr=curr->next;
+        }
+        return ans;
+    }
+};
+
+
+
+
+//{ Driver Code Starts.
 
 void append(struct Node** head_ref, struct Node **tail_ref, bool new_data)
 {
@@ -51,40 +89,9 @@ int main()
             cin>>l;
             append(&head, &tail, l);
         }
-
-        cout << decimalValue(head) << endl;
+        Solution obj;
+        cout << obj.decimalValue(head) << endl;
     }
     return 0;
 }
 // } Driver Code Ends
-
-#include<cmath>
-/* Below global variable is declared in code for modulo arithmetic*/
-// const long long unsigned int MOD = 1000000007; 
-
-/* Link list Node/
-struct Node
-{
-    bool data;   // NOTE data is bool
-    Node* next;
-    
-    Node(int x){
-        data = x;
-        next = NULL;
-    }
-    
-}; */
-
-// Should return decimal equivalent modulo 1000000007 of binary linked list 
-long long unsigned int decimalValue(Node *head)
-{
-    int N=1e9+7;
-   // Your Code Here
-   long long unsigned int ans=0;
-   while(head!=NULL)
-   {
-       ans=(ans*2+head->data)%MOD;
-       head=head->next;
-   }
-   return ans;
-}
