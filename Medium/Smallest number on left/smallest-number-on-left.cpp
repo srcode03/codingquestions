@@ -9,34 +9,36 @@ using namespace std;
 
 class Solution{
 public:
-    vector<int> leftSmaller(int n, int arr[]){
+    vector<int> leftSmaller(int n, int a[])
+    {
         // code here
-        vector<int>ans;
-        ans.push_back(-1);
+        vector<int>ans(n,-1);
         stack<int>st;
-        st.push(arr[0]);
+        st.push(a[0]);
         for(int i=1;i<n;i++)
         {
-            int fg=0;
-            while(!st.empty())
+            if(st.empty())
             {
-                if(st.top()<arr[i])
-                {
-                    fg=1;
-                    break;
-                }
-                else{
-                    st.pop();
-                }
+                st.push(a[i]);
+                continue;
             }
-            if(fg==1)
+            if(st.top()<a[i])
             {
-                ans.push_back(st.top());
+                ans[i]=st.top();
+                st.push(a[i]);
             }
             else{
-                ans.push_back(-1);
+                while(!st.empty())
+                {
+                    if(st.top()<a[i])
+                    {
+                        ans[i]=st.top();
+                        break;
+                    }
+                    st.pop();
+                }
+                st.push(a[i]);
             }
-            st.push(arr[i]);
         }
         return ans;
     }
