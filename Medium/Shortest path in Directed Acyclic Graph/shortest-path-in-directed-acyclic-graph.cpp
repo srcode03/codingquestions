@@ -8,51 +8,53 @@ using namespace std;
 // User function Template for C++
 class Solution {
   public:
-        void dfs(int node,vector<int>&vis,unordered_map<int,list<pair<int,int>>>&adj,stack<int>&st)
-        {
-          vis[node]=1;
-          for(auto it:adj[node])
-          {
-              if(!vis[it.first])
-              {
-                  dfs(it.first,vis,adj,st);
-              }
-          }
-          st.push(node);
-        }
-     vector<int> shortestPath(int N,int M, vector<vector<int>>& edges){
+     vector<int> shortestPath(int N,int M, vector<vector<int>>& e)
+     {
         // code here
         unordered_map<int,list<pair<int,int>>>adj;
+        queue<int>q;
+        vector<int>in(N,0);
         for(int i=0;i<M;i++)
         {
-            int u=edges[i][0];
-            int v=edges[i][1];
-            int w=edges[i][2];
-            adj[u].push_back({v,w});
+            adj[e[i][0]].push_back({e[i][1],e[i][2]});
+            in[e[i][1]]+=1;
         }
-        vector<int>vis(N,0);
-        stack<int>st;
         for(int i=0;i<N;i++)
         {
-            if(!vis[i])
+            if(in[i]==0)
             {
-                dfs(i,vis,adj,st);
+                q.push(i);
+            }
+        }
+        vector<int>t;
+        while(!q.empty())
+        {
+            int f=q.front();
+            q.pop();
+            t.push_back(f);
+            for(auto it:adj[f])
+            {
+                int val=it.first;
+                in[val]-=1;
+                if(in[val]==0)
+                {
+                    q.push(val);
+                }
             }
         }
         vector<int>dis(N,1e9);
-        dis[0]=0;
-        while(!st.empty())
+        for(int i=0;i<t.size();i++)
         {
-            int top=st.top();
-            st.pop();
-            if(dis[top]!=1e9)
+            int val=t[i];
+            if(i==0)
             {
-                for(auto it:adj[top])
+                dis[val]=0;
+            }
+            for(auto it:adj[val])
+            {
+                if(dis[val]+it.second<dis[it.first])
                 {
-                    if(dis[top]+it.second<dis[it.first])
-                    {
-                        dis[it.first]=dis[top]+it.second;
-                    }
+                    dis[it.first]=dis[val]+it.second;
                 }
             }
         }
@@ -64,7 +66,7 @@ class Solution {
             }
         }
         return dis;
-    }
+     }
 };
 
 
