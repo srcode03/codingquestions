@@ -6,61 +6,51 @@ using namespace std;
 
 // } Driver Code Ends
 // User function Template for C++
+
 class Solution{
-private:
-    vector<int> topoSort(int V, vector<int> adj[]) 
-	{
-	    // code here
-	    vector<int>indegree(V, 0);
-	    for(int i=0; i<V; i++){
-	        for(auto it:adj[i]){
-	            indegree[it]++;
-	        }
-	    }
-	    
-	    queue<int>q;
-	    for(int i=0; i<V; i++){
-	        if(indegree[i]==0) q.push(i);
-	    }
-	    
-	    vector<int>topo;
-	    while(!q.empty()){
-	        int node=q.front();
-	        q.pop();
-	        topo.push_back(node);
-	        
-	        for(auto it:adj[node]){
-	            indegree[it]--;
-	            if(indegree[it]==0) q.push(it);
-	        }
-	    }
-	    return topo;
-	}
-    
     public:
     string findOrder(string dict[], int N, int K) {
         //code here
-        vector<int>adj[K];
-        for(int i=0; i<N-1; i++){
-            string s1=dict[i];
-            string s2=dict[i+1];
-            int len=min(s1.size(), s2.size());
-            for(int ptr=0; ptr<len; ptr++){
-                if(s1[ptr]!=s2[ptr]){
-                    adj[s1[ptr]-'a'].push_back(s2[ptr]-'a');
+        unordered_map<char,list<char>>adj;
+        vector<int>in(K,0);
+        for(int i=0;i<N-1;i++)
+        {
+            for(int j=0;j<min(dict[i].length(),dict[i+1].length());j++)
+            {
+                if(dict[i][j]!=dict[i+1][j])
+                {
+                    adj[dict[i][j]].push_back(dict[i+1][j]);
+                    in[dict[i+1][j]-'a']+=1;
                     break;
                 }
             }
         }
-        vector<int>topo=topoSort(K, adj);
-        string ans="";
-        for(auto it:topo){
-            ans+=char(it+'a');
+        queue<char>q;
+        string ans;
+        for(int i=0;i<K;i++)
+        {
+            if(in[i]==0)
+            {
+                q.push(i+'a');
+            }
+        }
+        while(!q.empty())
+        {
+            char f=q.front();
+            ans.push_back(f);
+            q.pop();
+            for(auto it:adj[f])
+            {
+                in[it-'a']-=1;
+                if(in[it-'a']==0)
+                {
+                    q.push(it);
+                }
+            }
         }
         return ans;
     }
 };
-     
 
 //{ Driver Code Starts.
 string order;
