@@ -13,21 +13,21 @@ class Solution
         // Code here
         priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
         pq.push({0,S});
-        vector<int>dis(V,1e5);
+        vector<int>dis(V,1e9);
         dis[S]=0;
         while(!pq.empty())
         {
-           int d=pq.top().first;
-           int node=pq.top().second;
-           pq.pop();
-           for(auto it:adj[node])
-           {
-              if(d+it[1]<dis[it[0]])
-              {
-                  dis[it[0]]=d+it[1];
-                  pq.push({dis[it[0]],it[0]});
-              }
-           }
+            int node=pq.top().second;
+            int d=pq.top().first;
+            pq.pop();
+            for(auto it:adj[node])
+            {
+                if(it[1]+d<dis[it[0]])
+                {
+                    dis[it[0]]=it[1]+dis[node];
+                    pq.push({dis[it[0]],it[0]});
+                }
+            }
         }
         return dis;
     }
