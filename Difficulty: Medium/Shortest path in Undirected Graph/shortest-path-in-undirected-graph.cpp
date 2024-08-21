@@ -10,31 +10,27 @@ class Solution {
   public:
     vector<int> shortestPath(vector<vector<int>>& edges, int N,int M, int src){
         // code here
-        unordered_map<int,list<int>>adj;
+        unordered_map<int,list<pair<int,int>>>adj;
         for(int i=0;i<edges.size();i++)
         {
-            adj[edges[i][0]].push_back(edges[i][1]);
-            adj[edges[i][1]].push_back(edges[i][0]);
+            adj[edges[i][0]].push_back({edges[i][1],1});
+            adj[edges[i][1]].push_back({edges[i][0],1});
         }
-        vector<int>vis(N,0);
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+        pq.push({0,src});
         vector<int>dis(N,1e9);
         dis[src]=0;
-        queue<int>q;
-        q.push(src);
-        while(!q.empty())
+        while(!pq.empty())
         {
-            int node=q.front();
-            vis[node]=1;
-            q.pop();
+            int node=pq.top().second;
+            int d=pq.top().first;
+            pq.pop();
             for(auto it:adj[node])
             {
-                if(!vis[it])
+                if(1+dis[node]<dis[it.first])
                 {
-                    q.push(it);
-                }
-                if(dis[node]+1<dis[it])
-                {
-                    dis[it]=1+dis[node];
+                    dis[it.first]=1+dis[node];
+                    pq.push({dis[it.first],it.first});
                 }
             }
         }
